@@ -1,0 +1,20 @@
+{
+    'author': 'Scotsie (mscottcrace@gmail.com)',
+    'description': 'Active check plugin for CheckMK that uses the native '
+                   'check_icmp plugin but extends it to include the support -J'
+                   ' and -M flag. Measures jitter alongside standard ICMP'
+                   ' metrics for monitoring VoIP and real-time applications.',
+    'download_url': 'https://github.com/scotsie/icmp_extended',
+    'files': {
+        'cmk_addons_plugins': [
+            'icmp_extended/graphing/icmp_jitter.py',
+            'icmp_extended/rulesets/icmp.py',
+            'icmp_extended/server_side_calls/icmp.py',
+        ],
+    },
+    'name': 'icmp_extended',
+    'title': 'PING extended (ICMP Echo Request plus Jitter/MOS)',
+    'version': '0.0.1',
+    'version.min_required': '2.3.0',
+    'version.usable_until': '2.5.0',
+}
