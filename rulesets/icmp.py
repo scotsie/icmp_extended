@@ -31,6 +31,12 @@ def _validate_ip_index(value: int, varprefix: str) -> None:
     raise MKUserError(varprefix, _("The index must be greater or equal to 1."))
 
 
+def _validate_mos_value(value: float, varprefix: str) -> None:
+    if 0.0 <= value <= 4.4:
+        return
+    raise MKUserError(varprefix, _("MOS value must be between 0.0 and 4.4"))
+
+
 def _valuespec_active_checks_icmp() -> ValueSpec:
     elements: list[DictionaryEntry] = [
         (
@@ -105,7 +111,7 @@ def _valuespec_active_checks_icmp() -> ValueSpec:
                 minvalue=1,
             ),
         ),
-        # NEW: Jitter thresholds
+        # Jitter thresholds
         (
             "jitter",
             Tuple(
@@ -128,6 +134,47 @@ def _valuespec_active_checks_icmp() -> ValueSpec:
                         unit=_("ms"),
                         default_value=80.0,
                         minvalue=0.0,
+                    ),
+                ],
+            ),
+        ),
+        # NEW: MOS thresholds
+        (
+            "mos",
+            Tuple(
+                title=_("Mean Opinion Score (MOS) thresholds"),
+                help=_(
+                    "MOS (Mean Opinion Score) is a numerical measure of voice call quality "
+                    "ranging from 1.0 (bad) to 4.4 (excellent). It combines latency, jitter, "
+                    "and packet loss into a single quality metric. "
+                    "<br><br>"
+                    "<b>MOS Score Guide:</b><br>"
+                    "4.3 - 4.4: Excellent (toll quality)<br>"
+                    "4.0 - 4.2: Good (acceptable for most users)<br>"
+                    "3.6 - 3.9: Fair (some users may be dissatisfied)<br>"
+                    "3.1 - 3.5: Poor (many users dissatisfied)<br>"
+                    "2.6 - 3.0: Bad (nearly all users dissatisfied)<br>"
+                    "< 2.6: Unusable<br>"
+                    "<br>"
+                    "<b>Note:</b> Thresholds are inverted - lower MOS values trigger alerts. "
+                    "Warning threshold should be higher than critical threshold."
+                ),
+                elements=[
+                    Float(
+                        title=_("Warning below"),
+                        help=_("Alert when MOS drops below this value (e.g., 3.5)"),
+                        default_value=3.5,
+                        minvalue=0.0,
+                        maxvalue=4.4,
+                        validate=_validate_mos_value,
+                    ),
+                    Float(
+                        title=_("Critical below"),
+                        help=_("Critical alert when MOS drops below this value (e.g., 3.0)"),
+                        default_value=3.0,
+                        minvalue=0.0,
+                        maxvalue=4.4,
+                        validate=_validate_mos_value,
                     ),
                 ],
             ),

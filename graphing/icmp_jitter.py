@@ -6,7 +6,6 @@ Graphing definitions for ICMP Extension to Active Check (Jitter and MOS)
 from cmk.graphing.v1 import graphs, metrics, perfometers, Title
 
 # Metric definitions for jitter
-# Use DecimalNotation with "s" suffix to match existing RTA metrics
 metric_jitter_avg = metrics.Metric(
     name="jitter_avg",
     title=Title("Average jitter"),
@@ -28,6 +27,7 @@ metric_jitter_min = metrics.Metric(
     color=metrics.Color.CYAN,
 )
 
+# NEW: Metric definition for MOS
 metric_mos = metrics.Metric(
     name="mos",
     title=Title("Mean Opinion Score (MOS)"),
@@ -50,7 +50,7 @@ graph_jitter = graphs.Graph(
     ],
 )
 
-# Graph for MOS score
+# NEW: Graph for MOS score
 graph_mos = graphs.Graph(
     name="mos_score",
     title=Title("Voice quality (MOS)"),
@@ -69,7 +69,7 @@ perfometer_jitter = perfometers.Perfometer(
     segments=["jitter_avg"],
 )
 
-# Perfometer for MOS
+# NEW: Perfometer for MOS
 perfometer_mos = perfometers.Perfometer(
     name="mos",
     focus_range=perfometers.FocusRange(

@@ -2,8 +2,9 @@
     'author': 'Scotsie (mscottcrace@gmail.com)',
     'description': 'Active check plugin for CheckMK that uses the native '
                    'check_icmp plugin but extends it to include the support -J'
-                   ' and -M flag. Measures jitter alongside standard ICMP'
-                   ' metrics for monitoring VoIP and real-time applications.',
+                   ' and -M flag. Measures jitter and/or MOS alongside '
+                   'standard ICMP metrics for monitoring VoIP and real-time '
+                   'applications.',
     'download_url': 'https://github.com/scotsie/icmp_extended',
     'files': {
         'cmk_addons_plugins': [

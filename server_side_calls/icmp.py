@@ -43,7 +43,8 @@ class ICMPParams(BaseModel):
     packets: int | None = None
     rta: tuple[float, float] = (200, 500)
     loss: tuple[float, float] = (80, 100)
-    jitter: tuple[float, float] | None = None  # NEW: Jitter thresholds
+    jitter: tuple[float, float] | None = None
+    mos: tuple[float, float] | None = None  # NEW: MOS thresholds
 
 
 class AddressCmdArgs(NamedTuple):
@@ -94,9 +95,15 @@ def get_common_arguments(params: ICMPParams) -> list[str]:
     # Add packet loss thresholds with -P flag
     args += ["-P", "%d%%,%d%%" % (params.loss[0], params.loss[1])]
     
-    # NEW: Add jitter thresholds with -J flag if specified
+    # Add jitter thresholds with -J flag if specified
     if params.jitter is not None:
         args += ["-J", "%.2fms,%.2fms" % (params.jitter[0], params.jitter[1])]
+    
+    # NEW: Add MOS thresholds with -M flag if specified
+    # Note: MOS thresholds are inverted (lower is worse)
+    # So warning should be higher than critical
+    if params.mos is not None:
+        args += ["-M", "%.1f,%.1f" % (params.mos[0], params.mos[1])]
     
     return args
 
