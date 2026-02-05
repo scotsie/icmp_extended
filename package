@@ -12,11 +12,14 @@
             'icmp_extended/rulesets/icmp.py',
             'icmp_extended/server_side_calls/icmp.py',
         ],
+        'web': [
+            'plugins/wato/icmp_extended.py'
+        ]
     },
     'name': 'icmp_extended',
     'title': 'PING extended (ICMP Echo Request plus Jitter/MOS)',
-    'version': '2.3.1',
-    'version.min_required': '2.3.0',
-    'version.packaged': '2.3.0p41',
-    'version.usable_until': '2.5.0',
+    'version': '2.4.1',
+    'version.min_required': '2.4.0',
+    'version.packaged': '2.4.0p20',
+    'version.usable_until': '',
 }
